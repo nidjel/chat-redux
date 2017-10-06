@@ -6,7 +6,9 @@ class MessageList extends Component {
       <div>
         <ul>
           {this.props.messages.map((m, i) => (
-            <li key={i} onClick={() => this.props.onMessageClick(m.id)} >{m.text}</li>
+            <li key={i} onClick={() => this.props.onMessageClick(this.props.activeThreadId, m.id)} >
+              {m.text}<span>{m.time}</span>
+            </li>
           ))}
         </ul>
       </div>

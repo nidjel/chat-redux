@@ -13,7 +13,7 @@ class MessageInput extends Component {
   
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.onSubmit(this.state.value)
+    this.props.onSubmit(this.props.activeThreadId, this.props.author, this.state.value)
     this.setState({
       value: ''
     })

@@ -13,7 +13,7 @@ class TabThreads extends Component {
         <ul>
          {threads.map((t, i) => (
             <li key={i} >
-              <a href='#' onClick={(e) => this.handleThreadClick(e, t.id)} >{t.name}</a>
+              <button onClick={(e) => this.handleThreadClick(e, t.id)} >{t.name}</button>
             </li>
           ))}
         </ul>
