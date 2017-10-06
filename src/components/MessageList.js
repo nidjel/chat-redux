@@ -6,7 +6,7 @@ const List = (props) => (
   <div>
 	<ul>
 	  {props.messages.map((m, i) => (
-		<li key={i} onClick={() => props.onMessageClick(props.activeThreadId, m.id)} >
+		<li key={i} onClick={() => props.onMessageClick(m.id)} >
 		  {m.text}<span>{m.time}</span>
 		</li>
 	  ))}
@@ -20,12 +20,18 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onMessageClick: (activeThreadId, id) => dispatch(deleteMessage(activeThreadId, id))
+  dispatch
+})
+
+const mergeProps = (stateProps, dispatchProps) => ({
+  messages: stateProps.messages,
+  onMessageClick: (id) => dispatchProps.dispatch(deleteMessage(stateProps.activeThreadId, id))
 })
 
 const MessageList = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(List)
 
 export default MessageList

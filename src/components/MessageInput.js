@@ -15,7 +15,7 @@ class Input extends Component {
   
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.onSubmit(this.props.activeThreadId, this.props.author, this.state.value)
+    this.props.onSubmit(this.state.value)
     this.setState({
       value: ''
     })
@@ -39,6 +39,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  dispatch,
   onSubmit: (activeThreadId, author, value) => {
     const newMessageId = (Math.floor(Math.random()*1000)).toString()
     const submitTime = Date.now()
@@ -46,9 +47,18 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
+const mergeProps = (stateProps, dispatchProps) => ({
+  onSubmit: (value) => {
+    const newMessageId = (Math.floor(Math.random()*1000)).toString()
+    const submitTime = Date.now()
+    dispatchProps.dispatch(addMessage(stateProps.activeThreadId, stateProps.author, newMessageId, submitTime, value))
+  }
+})
+
 const MessageInput = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(Input)
 
 export default MessageInput
