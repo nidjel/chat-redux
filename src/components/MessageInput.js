@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
+import {addMessage} from '../actions.js'
 
-class MessageInput extends Component {
+class Input extends Component {
   state = {
     value: ''
   }
@@ -30,5 +32,23 @@ class MessageInput extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  activeThreadId: state.activeThreadId,
+  author: state.threads.byId[state.activeThreadId].name
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (activeThreadId, author, value) => {
+    const newMessageId = (Math.floor(Math.random()*1000)).toString()
+    const submitTime = Date.now()
+    dispatch(addMessage(activeThreadId, newMessageId, author, submitTime, value))
+  }
+})
+
+const MessageInput = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Input)
 
 export default MessageInput
