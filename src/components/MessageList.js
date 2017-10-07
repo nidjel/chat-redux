@@ -1,16 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {deleteMessage} from '../actions.js'
+import {deleteMessage} from '../actions'
+import {List} from 'semantic-ui-react'
 
-const List = (props) => (
+const ListForMessages = (props) => (
   <div>
-	<ul>
+	<List>
 	  {props.messages.map((m, i) => (
-		<li key={i} onClick={() => props.onMessageClick(m.id)} >
-		  {m.text}<span>{m.time}</span>
-		</li>
+		<List.Item key={i} onClick={() => props.onMessageClick(m.id)} >
+		  {m.text}
+		  <span className='messageTime'>@{m.time}</span>
+		</List.Item>
 	  ))}
-	</ul>
+	</List>
   </div>
 )
 
@@ -32,6 +34,6 @@ const MessageList = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(List)
+)(ListForMessages)
 
 export default MessageList

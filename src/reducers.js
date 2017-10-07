@@ -23,6 +23,7 @@ export const threads = (state={
   switch (action.type) {
     case 'ADD_MESSAGE': {
       const activeThread = state.byId[action.payload.activeThreadId]
+      console.log(action)
       return ({
         ...state,
         byId: {

@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {addMessage} from '../actions.js'
 
-class Input extends Component {
+import {Button, Input} from 'semantic-ui-react'
+
+class InputField extends Component {
   state = {
     value: ''
   }
@@ -13,7 +15,7 @@ class Input extends Component {
     })
   }
   
-  handleSubmit = (e) => {
+  handleButtonClick = (e) => {
     e.preventDefault()
     this.props.onSubmit(this.state.value)
     this.setState({
@@ -24,9 +26,9 @@ class Input extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit} >
-          <input type='text' value={this.state.value} onChange={this.handleChange} />
-          <button type='submit'>Submit</button>
+        <form >
+          <Input type='text' value={this.state.value} onChange={this.handleChange} />
+          <Button onClick={this.handleButtonClick}>Submit</Button>
         </form>
       </div>
     )
@@ -40,18 +42,18 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch,
-  onSubmit: (activeThreadId, author, value) => {
-    const newMessageId = (Math.floor(Math.random()*1000)).toString()
-    const submitTime = Date.now()
-    dispatch(addMessage(activeThreadId, newMessageId, author, submitTime, value))
-  }
 })
 
 const mergeProps = (stateProps, dispatchProps) => ({
   onSubmit: (value) => {
     const newMessageId = (Math.floor(Math.random()*1000)).toString()
     const submitTime = Date.now()
-    dispatchProps.dispatch(addMessage(stateProps.activeThreadId, stateProps.author, newMessageId, submitTime, value))
+    dispatchProps.dispatch(addMessage({
+      activeThreadId: stateProps.activeThreadId, 
+      author: stateProps.author, 
+      newMessageId, 
+      submitTime, 
+      value}))
   }
 })
 
@@ -59,6 +61,6 @@ const MessageInput = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(Input)
+)(InputField)
 
 export default MessageInput

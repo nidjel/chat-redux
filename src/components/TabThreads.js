@@ -1,16 +1,16 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {changeActiveThread} from '../actions.js'
+import {Tab} from 'semantic-ui-react'
 
 const Tabs = (props) => (
   <div>
-    <ul>
-     {props.threads.map((t, i) => (
-        <li key={i} >
-          <button onClick={() => props.onThreadClick(t.id)} >{t.name}</button>
-        </li>
+    <Tab 
+      panes={props.threads.map((t, i) => (
+        {menuItem: t.name}
       ))}
-    </ul>
+      onTabChange={(event, data) => props.onThreadClick(props.threads[data.activeIndex].id)}
+    />
   </div>
 )
 
